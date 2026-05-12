@@ -20,14 +20,14 @@ const methodLookup: Record<string, RequestMethod> = {
   initialize,
 };
 
-const respond = (id: RequestMessage["id"], result: object | null) => {
+function respond(id: RequestMessage["id"], result: object | null): void {
   const message = JSON.stringify({ id, result });
   const messageLength = Buffer.byteLength(message, "utf-8");
   const header = `Content-Length: ${messageLength}\r\n\r\n`;
 
   log.write(header + message);
   process.stdout.write(header + message);
-};
+}
 
 export interface RequestMessage extends Message {
   id: number | string;
